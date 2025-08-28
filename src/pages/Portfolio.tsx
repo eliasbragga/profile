@@ -1,10 +1,12 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { ThemeToggle } from "@/components/ThemeToggle"
 import { ProjectCard } from "@/components/ProjectCard"
 import { TechIcon, TechIcons } from "@/components/TechIcon"
 import { ContactForm } from "@/components/ContactForm"
+import { FeedbackCard } from "@/components/FeedbackCard"
+import { AchievementsList } from "@/components/AchievementsList"
+import { CertificateCard } from "@/components/CertificateCard"
+import { EbookCard } from "@/components/EbookCard"
 import { Button } from "@/components/ui/button"
 import { ChevronDown, Github, Linkedin, Mail } from "lucide-react"
 
@@ -13,6 +15,9 @@ import profilePhoto from "@/assets/profile-photo.jpg"
 import project1 from "@/assets/project-1.jpg"
 import project2 from "@/assets/project-2.jpg"
 import project3 from "@/assets/project-3.jpg"
+import uniasselviLogo from "@/assets/uniasselvi-logo.jpg"
+import metaLogo from "@/assets/meta-logo.jpg"
+import ebookCover from "@/assets/ebook-cover.jpg"
 
 const projects = [
   {
@@ -55,6 +60,30 @@ const technologies = [
   { name: "Git", icon: TechIcons.Git() },
 ]
 
+const feedbacks = [
+  {
+    name: "Ana Silva",
+    role: "Tech Lead",
+    company: "TechCorp",
+    feedback: "Excelente desenvolvedor frontend, sempre entrega código limpo e bem estruturado. Sua expertise em Vue.js foi fundamental para nosso projeto.",
+    rating: 5
+  },
+  {
+    name: "Carlos Mendes",
+    role: "Product Manager", 
+    company: "StartupXYZ",
+    feedback: "Profissional dedicado e proativo. Sempre busca as melhores soluções e tem ótima comunicação com toda a equipe.",
+    rating: 5
+  },
+  {
+    name: "Marina Costa",
+    role: "CTO",
+    company: "DevSolutions",
+    feedback: "Desenvolvedor excepcional com grande conhecimento técnico. Contribuiu significativamente para a melhoria da performance dos nossos sistemas.",
+    rating: 5
+  }
+]
+
 const countries = [
   { name: "Brasil", flag: "🇧🇷" },
   { name: "Portugal", flag: "🇵🇹" },
@@ -66,6 +95,22 @@ const countries = [
   { name: "Áustria", flag: "🇦🇹" },
   { name: "Itália", flag: "🇮🇹" },
   { name: "Argentina", flag: "🇦🇷" },
+]
+
+const certificates = [
+  {
+    title: "Análise e Desenvolvimento de Sistemas",
+    institution: "UNIASSELVI",
+    status: "Cursando",
+    logo: uniasselviLogo,
+    type: "course" as const
+  },
+  {
+    title: "Frontend Developer",
+    institution: "Meta",
+    logo: metaLogo,
+    type: "certification" as const
+  }
 ]
 
 export default function Portfolio() {
@@ -95,8 +140,20 @@ export default function Portfolio() {
             <button onClick={() => scrollToSection("skills")} className="text-sm hover:text-primary transition-colors">
               Habilidades
             </button>
+            <button onClick={() => scrollToSection("achievements")} className="text-sm hover:text-primary transition-colors">
+              Feitos
+            </button>
             <button onClick={() => scrollToSection("projects")} className="text-sm hover:text-primary transition-colors">
               Projetos
+            </button>
+            <button onClick={() => scrollToSection("feedbacks")} className="text-sm hover:text-primary transition-colors">
+              Feedbacks
+            </button>
+            <button onClick={() => scrollToSection("certificates")} className="text-sm hover:text-primary transition-colors">
+              Certificados
+            </button>
+            <button onClick={() => scrollToSection("ebook")} className="text-sm hover:text-primary transition-colors">
+              E-book
             </button>
             <button onClick={() => scrollToSection("contact")} className="text-sm hover:text-primary transition-colors">
               Contato
@@ -192,22 +249,32 @@ export default function Portfolio() {
             </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 animate-slide-in-left">
-            {technologies.map((tech, index) => (
-              <div
-                key={tech.name}
-                style={{ animationDelay: `${index * 100}ms` }}
-                className="animate-scale-in"
-              >
-                <TechIcon name={tech.name} icon={tech.icon} />
-              </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {technologies.map((tech) => (
+              <TechIcon key={tech.name} name={tech.name} icon={tech.icon} />
             ))}
           </div>
         </div>
       </section>
 
+      {/* Achievements Section */}
+      <section id="achievements" className="py-20 px-4 bg-muted/50">
+        <div className="container mx-auto">
+          <div className="text-center mb-16 animate-fade-up">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Meus Feitos</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Principais conquistas e contribuições ao longo da minha carreira.
+            </p>
+          </div>
+          
+          <div className="max-w-3xl mx-auto">
+            <AchievementsList />
+          </div>
+        </div>
+      </section>
+
       {/* Projects Section */}
-      <section id="projects" className="py-20 px-4 bg-muted/50">
+      <section id="projects" className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16 animate-fade-up">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Meus Projetos</h2>
@@ -226,6 +293,74 @@ export default function Portfolio() {
                 <ProjectCard {...project} />
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Feedbacks Section */}
+      <section id="feedbacks" className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-16 animate-fade-up">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Feedbacks</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              O que colegas e clientes dizem sobre meu trabalho.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {feedbacks.map((feedback, index) => (
+              <div
+                key={feedback.name}
+                style={{ animationDelay: `${index * 200}ms` }}
+                className="animate-slide-in-right"
+              >
+                <FeedbackCard {...feedback} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Certificates Section */}
+      <section id="certificates" className="py-20 px-4 bg-muted/50">
+        <div className="container mx-auto">
+          <div className="text-center mb-16 animate-fade-up">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Certificados</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Formação acadêmica e certificações profissionais.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+            {certificates.map((certificate, index) => (
+              <div
+                key={certificate.title}
+                style={{ animationDelay: `${index * 200}ms` }}
+                className="animate-scale-in"
+              >
+                <CertificateCard {...certificate} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* E-book Section */}
+      <section id="ebook" className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-16 animate-fade-up">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">E-book Gratuito</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Compartilho minha experiência para ajudar novos desenvolvedores.
+            </p>
+          </div>
+          
+          <div className="animate-scale-in">
+            <EbookCard 
+              title="Como conseguir o primeiro emprego na programação"
+              description="Um guia completo com dicas práticas, estratégias de estudo e insights valiosos para quem está começando na área de desenvolvimento de software."
+              coverImage={ebookCover}
+            />
           </div>
         </div>
       </section>
