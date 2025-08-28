@@ -36,8 +36,7 @@ const projects = [
     description: "Aplicação corporativa Angular para gestão de tarefas, com interface robusta e funcionalidades avançadas.",
     image: project3,
     technologies: ["Angular", "RxJS", "Material UI", "NestJS"],
-    liveUrl: "#",
-    githubUrl: "#",
+    isPrivate: true,
   },
 ]
 
@@ -48,8 +47,25 @@ const technologies = [
   { name: "TypeScript", icon: TechIcons.TypeScript() },
   { name: "JavaScript", icon: TechIcons.JavaScript() },
   { name: "Node.js", icon: TechIcons.NodeJS() },
+  { name: "Java", icon: TechIcons.Java() },
+  { name: "Spring Boot", icon: TechIcons.Spring() },
+  { name: "PostgreSQL", icon: TechIcons.PostgreSQL() },
+  { name: "IA", icon: TechIcons.AI() },
   { name: "Tailwind", icon: TechIcons.Tailwind() },
   { name: "Git", icon: TechIcons.Git() },
+]
+
+const countries = [
+  { name: "Brasil", flag: "🇧🇷" },
+  { name: "Portugal", flag: "🇵🇹" },
+  { name: "Espanha", flag: "🇪🇸" },
+  { name: "França", flag: "🇫🇷" },
+  { name: "Holanda", flag: "🇳🇱" },
+  { name: "Alemanha", flag: "🇩🇪" },
+  { name: "República Tcheca", flag: "🇨🇿" },
+  { name: "Áustria", flag: "🇦🇹" },
+  { name: "Itália", flag: "🇮🇹" },
+  { name: "Argentina", flag: "🇦🇷" },
 ]
 
 export default function Portfolio() {
@@ -109,9 +125,25 @@ export default function Portfolio() {
               Desenvolvedor de Software
             </h1>
             
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
-              Com 4 anos de experiência. Nos últimos 12 meses, viajei por 9 países conhecendo novas culturas e desenvolvendo soluções interessantes para pessoas e empresas.
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 leading-relaxed">
+              Com 4 anos de experiência. Nos últimos 12 meses, viajei por 10 países conhecendo novas culturas e desenvolvendo soluções interessantes para pessoas e empresas.
             </p>
+            
+            <div className="mb-8">
+              <h3 className="text-sm font-medium text-muted-foreground mb-3">Países visitados:</h3>
+              <div className="flex flex-wrap justify-center gap-3 max-w-md mx-auto">
+                {countries.map((country) => (
+                  <div
+                    key={country.name}
+                    className="flex items-center gap-1 text-sm bg-background/50 backdrop-blur-sm px-2 py-1 rounded-full border border-border/50 hover:shadow-glow transition-all duration-300"
+                    title={country.name}
+                  >
+                    <span className="text-lg">{country.flag}</span>
+                    <span className="text-xs text-muted-foreground hidden sm:inline">{country.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
               <Button 

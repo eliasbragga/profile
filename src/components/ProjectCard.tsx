@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { ExternalLink, Github } from "lucide-react"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { ExternalLink, Github, Lock } from "lucide-react"
 
 interface ProjectCardProps {
   title: string
@@ -10,6 +11,7 @@ interface ProjectCardProps {
   technologies: string[]
   liveUrl?: string
   githubUrl?: string
+  isPrivate?: boolean
 }
 
 export function ProjectCard({ 
@@ -18,7 +20,8 @@ export function ProjectCard({
   image, 
   technologies, 
   liveUrl, 
-  githubUrl 
+  githubUrl,
+  isPrivate = false
 }: ProjectCardProps) {
   return (
     <Card className="group overflow-hidden transition-all duration-300 hover:shadow-elegant hover:-translate-y-2 bg-card-gradient border-border/50">
@@ -31,17 +34,34 @@ export function ProjectCard({
           />
           <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
             <div className="flex gap-2">
-              {liveUrl && (
-                <Button size="sm" className="bg-background/90 text-foreground hover:bg-background">
-                  <ExternalLink className="w-4 h-4 mr-1" />
-                  Demo
-                </Button>
-              )}
-              {githubUrl && (
-                <Button size="sm" variant="outline" className="bg-background/90 hover:bg-background">
-                  <Github className="w-4 h-4 mr-1" />
-                  Código
-                </Button>
+              {isPrivate ? (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button size="sm" variant="outline" className="bg-background/90 hover:bg-background" disabled>
+                        <Lock className="w-4 h-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Projeto empresarial privado</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              ) : (
+                <>
+                  {liveUrl && (
+                    <Button size="sm" className="bg-background/90 text-foreground hover:bg-background">
+                      <ExternalLink className="w-4 h-4 mr-1" />
+                      Demo
+                    </Button>
+                  )}
+                  {githubUrl && (
+                    <Button size="sm" variant="outline" className="bg-background/90 hover:bg-background">
+                      <Github className="w-4 h-4 mr-1" />
+                      Código
+                    </Button>
+                  )}
+                </>
               )}
             </div>
           </div>
