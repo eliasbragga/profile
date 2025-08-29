@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { ThemeToggle } from "@/components/ThemeToggle"
+import { LanguageToggle } from "@/components/LanguageToggle"
 import { ProjectCard } from "@/components/ProjectCard"
 import { TechIcon, TechIcons } from "@/components/TechIcon"
 import { ContactForm } from "@/components/ContactForm"
@@ -9,6 +10,7 @@ import { CertificateCard } from "@/components/CertificateCard"
 import { EbookCard } from "@/components/EbookCard"
 import { Button } from "@/components/ui/button"
 import { ChevronDown, Github, Linkedin, Mail } from "lucide-react"
+import { useTranslation } from "@/contexts/TranslationContext"
 
 // Import images
 import profilePhoto from "@/assets/profile-photo.jpg"
@@ -19,26 +21,32 @@ import uniasselviLogo from "@/assets/uniasselvi-logo.jpg"
 import metaLogo from "@/assets/meta-logo.jpg"
 import ebookCover from "@/assets/ebook-cover.jpg"
 
-const projects = [
+const getProjects = (language: string) => [
   {
-    title: "Dashboard Analytics",
-    description: "Painel completo de análise de dados com Vue.js, gráficos interativos e visualizações em tempo real.",
+    title: language === 'pt' ? "Dashboard Analytics" : "Analytics Dashboard",
+    description: language === 'pt' 
+      ? "Painel completo de análise de dados com Vue.js, gráficos interativos e visualizações em tempo real."
+      : "Complete data analytics dashboard with Vue.js, interactive charts and real-time visualizations.",
     image: project1,
     technologies: ["Vue.js", "TypeScript", "Chart.js", "Tailwind CSS"],
     liveUrl: "#",
     githubUrl: "#",
   },
   {
-    title: "E-commerce Modern",
-    description: "Plataforma de e-commerce responsiva com React.js, carrinho de compras e integração de pagamentos.",
+    title: language === 'pt' ? "E-commerce Modern" : "Modern E-commerce",
+    description: language === 'pt'
+      ? "Plataforma de e-commerce responsiva com React.js, carrinho de compras e integração de pagamentos."
+      : "Responsive e-commerce platform with React.js, shopping cart and payment integration.",
     image: project2,
     technologies: ["React", "Redux", "Stripe", "Node.js"],
     liveUrl: "#",
     githubUrl: "#",
   },
   {
-    title: "Sistema Empresarial",
-    description: "Aplicação corporativa Angular para gestão de tarefas, com interface robusta e funcionalidades avançadas.",
+    title: language === 'pt' ? "Sistema Empresarial" : "Enterprise System",
+    description: language === 'pt'
+      ? "Aplicação corporativa Angular para gestão de tarefas, com interface robusta e funcionalidades avançadas."
+      : "Angular corporate application for task management, with robust interface and advanced features.",
     image: project3,
     technologies: ["Angular", "RxJS", "Material UI", "NestJS"],
     isPrivate: true,
@@ -60,48 +68,56 @@ const technologies = [
   { name: "Git", icon: TechIcons.Git() },
 ]
 
-const feedbacks = [
+const getFeedbacks = (language: string) => [
   {
     name: "Ana Silva",
     role: "Tech Lead",
     company: "TechCorp",
-    feedback: "Excelente desenvolvedor frontend, sempre entrega código limpo e bem estruturado. Sua expertise em Vue.js foi fundamental para nosso projeto.",
+    feedback: language === 'pt'
+      ? "Excelente desenvolvedor frontend, sempre entrega código limpo e bem estruturado. Sua expertise em Vue.js foi fundamental para nosso projeto."
+      : "Excellent frontend developer, always delivers clean and well-structured code. His Vue.js expertise was fundamental to our project.",
     rating: 5
   },
   {
     name: "Carlos Mendes",
     role: "Product Manager", 
     company: "StartupXYZ",
-    feedback: "Profissional dedicado e proativo. Sempre busca as melhores soluções e tem ótima comunicação com toda a equipe.",
+    feedback: language === 'pt'
+      ? "Profissional dedicado e proativo. Sempre busca as melhores soluções e tem ótima comunicação com toda a equipe."
+      : "Dedicated and proactive professional. Always seeks the best solutions and has great communication with the entire team.",
     rating: 5
   },
   {
     name: "Marina Costa",
     role: "CTO",
     company: "DevSolutions",
-    feedback: "Desenvolvedor excepcional com grande conhecimento técnico. Contribuiu significativamente para a melhoria da performance dos nossos sistemas.",
+    feedback: language === 'pt'
+      ? "Desenvolvedor excepcional com grande conhecimento técnico. Contribuiu significativamente para a melhoria da performance dos nossos sistemas."
+      : "Exceptional developer with great technical knowledge. Contributed significantly to improving the performance of our systems.",
     rating: 5
   }
 ]
 
-const countries = [
-  { name: "Brasil", flag: "🇧🇷" },
-  { name: "Portugal", flag: "🇵🇹" },
-  { name: "Espanha", flag: "🇪🇸" },
-  { name: "França", flag: "🇫🇷" },
-  { name: "Holanda", flag: "🇳🇱" },
-  { name: "Alemanha", flag: "🇩🇪" },
-  { name: "República Tcheca", flag: "🇨🇿" },
-  { name: "Áustria", flag: "🇦🇹" },
-  { name: "Itália", flag: "🇮🇹" },
-  { name: "Argentina", flag: "🇦🇷" },
+const getCountries = (language: string, t: (key: string) => string) => [
+  { name: t('country.brasil'), flag: "🇧🇷" },
+  { name: t('country.portugal'), flag: "🇵🇹" },
+  { name: t('country.espanha'), flag: "🇪🇸" },
+  { name: t('country.franca'), flag: "🇫🇷" },
+  { name: t('country.holanda'), flag: "🇳🇱" },
+  { name: t('country.alemanha'), flag: "🇩🇪" },
+  { name: t('country.republica-tcheca'), flag: "🇨🇿" },
+  { name: t('country.austria'), flag: "🇦🇹" },
+  { name: t('country.italia'), flag: "🇮🇹" },
+  { name: t('country.argentina'), flag: "🇦🇷" },
 ]
 
-const certificates = [
+const getCertificates = (language: string) => [
   {
-    title: "Análise e Desenvolvimento de Sistemas",
+    title: language === 'pt' 
+      ? "Análise e Desenvolvimento de Sistemas" 
+      : "Systems Analysis and Development",
     institution: "UNIASSELVI",
-    status: "Cursando",
+    status: language === 'pt' ? "Cursando" : "In Progress",
     logo: uniasselviLogo,
     type: "course" as const
   },
@@ -115,6 +131,12 @@ const certificates = [
 
 export default function Portfolio() {
   const [scrollY, setScrollY] = useState(0)
+  const { language, t } = useTranslation()
+  
+  const projects = getProjects(language)
+  const feedbacks = getFeedbacks(language)
+  const countries = getCountries(language, t)
+  const certificates = getCertificates(language)
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -135,32 +157,36 @@ export default function Portfolio() {
           <h1 className="text-xl font-bold">Portfolio</h1>
           <nav className="hidden md:flex items-center space-x-6">
             <button onClick={() => scrollToSection("about")} className="text-sm hover:text-primary transition-colors">
-              Sobre
+              {t('nav.about')}
             </button>
             <button onClick={() => scrollToSection("skills")} className="text-sm hover:text-primary transition-colors">
-              Habilidades
+              {t('nav.skills')}
             </button>
             <button onClick={() => scrollToSection("achievements")} className="text-sm hover:text-primary transition-colors">
-              Feitos
+              {t('nav.achievements')}
             </button>
             <button onClick={() => scrollToSection("projects")} className="text-sm hover:text-primary transition-colors">
-              Projetos
+              {t('nav.projects')}
             </button>
             <button onClick={() => scrollToSection("feedbacks")} className="text-sm hover:text-primary transition-colors">
-              Feedbacks
+              {t('nav.feedbacks')}
             </button>
             <button onClick={() => scrollToSection("certificates")} className="text-sm hover:text-primary transition-colors">
-              Certificados
+              {t('nav.certificates')}
             </button>
             <button onClick={() => scrollToSection("ebook")} className="text-sm hover:text-primary transition-colors">
-              E-book
+              {t('nav.ebook')}
             </button>
             <button onClick={() => scrollToSection("contact")} className="text-sm hover:text-primary transition-colors">
-              Contato
+              {t('nav.contact')}
             </button>
-            <ThemeToggle />
+            <div className="flex items-center space-x-2">
+              <LanguageToggle />
+              <ThemeToggle />
+            </div>
           </nav>
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center space-x-2">
+            <LanguageToggle />
             <ThemeToggle />
           </div>
         </div>
@@ -179,15 +205,15 @@ export default function Portfolio() {
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Desenvolvedor de Software
+              {t('hero.title')}
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 leading-relaxed">
-              Com 4 anos de experiência. Nos últimos 12 meses, viajei por 10 países conhecendo novas culturas e desenvolvendo soluções interessantes para pessoas e empresas.
+              {t('hero.description')}
             </p>
             
             <div className="mb-8">
-              <h3 className="text-sm font-medium text-muted-foreground mb-3">Países visitados:</h3>
+              <h3 className="text-sm font-medium text-muted-foreground mb-3">{t('hero.countries')}</h3>
               <div className="flex flex-wrap justify-center gap-3 max-w-md mx-auto">
                 {countries.map((country) => (
                   <div
@@ -208,7 +234,7 @@ export default function Portfolio() {
                 onClick={() => scrollToSection("projects")}
                 className="transition-all duration-300 hover:shadow-glow"
               >
-                Ver Projetos
+                {t('hero.viewProjects')}
               </Button>
               <Button 
                 variant="outline" 
@@ -216,7 +242,7 @@ export default function Portfolio() {
                 onClick={() => scrollToSection("contact")}
                 className="transition-all duration-300 hover:shadow-glow"
               >
-                Entrar em Contato
+                {t('hero.contact')}
               </Button>
             </div>
 
@@ -243,9 +269,9 @@ export default function Portfolio() {
       <section id="skills" className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16 animate-fade-up">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Minhas Habilidades</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('skills.title')}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Especializado em frontend com Vue.js e experiência sólida em React.js e Angular.
+              {t('skills.description')}
             </p>
           </div>
           
@@ -261,9 +287,9 @@ export default function Portfolio() {
       <section id="achievements" className="py-20 px-4 bg-muted/50">
         <div className="container mx-auto">
           <div className="text-center mb-16 animate-fade-up">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Meus Feitos</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('achievements.title')}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Principais conquistas e contribuições ao longo da minha carreira.
+              {t('achievements.description')}
             </p>
           </div>
           
@@ -277,9 +303,9 @@ export default function Portfolio() {
       <section id="projects" className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16 animate-fade-up">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Meus Projetos</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('projects.title')}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Uma seleção dos meus trabalhos mais recentes e interessantes.
+              {t('projects.description')}
             </p>
           </div>
           
@@ -301,9 +327,9 @@ export default function Portfolio() {
       <section id="feedbacks" className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16 animate-fade-up">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Feedbacks</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('feedbacks.title')}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              O que colegas e clientes dizem sobre meu trabalho.
+              {t('feedbacks.description')}
             </p>
           </div>
           
@@ -325,9 +351,9 @@ export default function Portfolio() {
       <section id="certificates" className="py-20 px-4 bg-muted/50">
         <div className="container mx-auto">
           <div className="text-center mb-16 animate-fade-up">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Certificados</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('certificates.title')}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Formação acadêmica e certificações profissionais.
+              {t('certificates.description')}
             </p>
           </div>
           
@@ -349,16 +375,22 @@ export default function Portfolio() {
       <section id="ebook" className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16 animate-fade-up">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">E-book Gratuito</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('ebook.title')}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Compartilho minha experiência para ajudar novos desenvolvedores.
+              {t('ebook.description')}
             </p>
           </div>
           
           <div className="animate-scale-in">
             <EbookCard 
-              title="Como conseguir o primeiro emprego na programação"
-              description="Um guia completo com dicas práticas, estratégias de estudo e insights valiosos para quem está começando na área de desenvolvimento de software."
+              title={language === 'pt' 
+                ? "Como conseguir o primeiro emprego na programação"
+                : "How to get your first programming job"
+              }
+              description={language === 'pt'
+                ? "Um guia completo com dicas práticas, estratégias de estudo e insights valiosos para quem está começando na área de desenvolvimento de software."
+                : "A complete guide with practical tips, study strategies and valuable insights for those starting in software development."
+              }
               coverImage={ebookCover}
             />
           </div>
@@ -369,9 +401,9 @@ export default function Portfolio() {
       <section id="contact" className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16 animate-fade-up">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Vamos Trabalhar Juntos?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('contact.title')}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Estou sempre aberto a novos desafios e oportunidades interessantes.
+              {t('contact.description')}
             </p>
           </div>
           
@@ -384,7 +416,7 @@ export default function Portfolio() {
       {/* Footer */}
       <footer className="py-8 px-4 border-t border-border">
         <div className="container mx-auto text-center text-muted-foreground">
-          <p>&copy; 2024 Portfolio. Desenvolvido com ❤️ usando React e Tailwind CSS.</p>
+          <p>&copy; {t('footer.text')}</p>
         </div>
       </footer>
     </div>

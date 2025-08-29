@@ -8,10 +8,12 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Mail, Send, Download } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { useTranslation } from "@/contexts/TranslationContext"
 
 export function ContactForm() {
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
+  const { language } = useTranslation()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -21,8 +23,10 @@ export function ContactForm() {
     await new Promise(resolve => setTimeout(resolve, 2000))
     
     toast({
-      title: "Mensagem enviada!",
-      description: "Obrigado pelo contato. Retornarei em breve!",
+      title: language === 'pt' ? "Mensagem enviada!" : "Message sent!",
+      description: language === 'pt' 
+        ? "Obrigado pelo contato. Retornarei em breve!" 
+        : "Thank you for contacting me. I'll get back to you soon!",
     })
     
     setIsLoading(false)
@@ -34,8 +38,10 @@ export function ContactForm() {
 
   const handleDownloadCV = () => {
     toast({
-      title: "Download iniciado",
-      description: "O currículo está sendo baixado...",
+      title: language === 'pt' ? "Download iniciado" : "Download started",
+      description: language === 'pt' 
+        ? "O currículo está sendo baixado..." 
+        : "The resume is being downloaded...",
     })
     // Aqui você adicionaria a lógica real de download
   }
@@ -45,21 +51,26 @@ export function ContactForm() {
       <CardHeader className="text-center pb-4">
         <CardTitle className="flex items-center justify-center gap-2 text-2xl mb-2">
           <Mail className="w-6 h-6 text-primary" />
-          Vamos conversar?
+          {language === 'pt' ? 'Vamos conversar?' : "Let's talk?"}
         </CardTitle>
         <p className="text-sm text-muted-foreground">
-          Estou sempre disponível para novos projetos e oportunidades
+          {language === 'pt' 
+            ? 'Estou sempre disponível para novos projetos e oportunidades'
+            : "I'm always available for new projects and opportunities"
+          }
         </p>
       </CardHeader>
       <CardContent className="pt-0">
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-sm font-medium">Nome *</Label>
+              <Label htmlFor="name" className="text-sm font-medium">
+                {language === 'pt' ? 'Nome *' : 'Name *'}
+              </Label>
               <Input 
                 id="name" 
                 name="name" 
-                placeholder="Seu nome completo"
+                placeholder={language === 'pt' ? 'Seu nome completo' : 'Your full name'}
                 required 
                 className="transition-all duration-300 focus:shadow-glow border-border/50 bg-background/50" 
               />
@@ -71,7 +82,7 @@ export function ContactForm() {
                 id="email" 
                 name="email" 
                 type="email" 
-                placeholder="seu@email.com"
+                placeholder={language === 'pt' ? 'seu@email.com' : 'your@email.com'}
                 required 
                 className="transition-all duration-300 focus:shadow-glow border-border/50 bg-background/50" 
               />
@@ -79,22 +90,32 @@ export function ContactForm() {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="subject" className="text-sm font-medium">Assunto</Label>
+            <Label htmlFor="subject" className="text-sm font-medium">
+              {language === 'pt' ? 'Assunto' : 'Subject'}
+            </Label>
             <Input 
               id="subject" 
               name="subject" 
-              placeholder="Sobre o que gostaria de conversar?"
+              placeholder={language === 'pt' 
+                ? 'Sobre o que gostaria de conversar?' 
+                : 'What would you like to talk about?'
+              }
               className="transition-all duration-300 focus:shadow-glow border-border/50 bg-background/50" 
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="message" className="text-sm font-medium">Mensagem *</Label>
+            <Label htmlFor="message" className="text-sm font-medium">
+              {language === 'pt' ? 'Mensagem *' : 'Message *'}
+            </Label>
             <Textarea 
               id="message" 
               name="message" 
               rows={5} 
-              placeholder="Conte-me sobre seu projeto ou ideia..."
+              placeholder={language === 'pt' 
+                ? 'Conte-me sobre seu projeto ou ideia...' 
+                : 'Tell me about your project or idea...'
+              }
               required 
               className="transition-all duration-300 focus:shadow-glow resize-none border-border/50 bg-background/50" 
             />
@@ -110,12 +131,12 @@ export function ContactForm() {
               {isLoading ? (
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                  Enviando...
+                  {language === 'pt' ? 'Enviando...' : 'Sending...'}
                 </div>
               ) : (
                 <>
                   <Send className="w-4 h-4 mr-2" />
-                  Enviar mensagem
+                  {language === 'pt' ? 'Enviar mensagem' : 'Send message'}
                 </>
               )}
             </Button>
@@ -128,7 +149,7 @@ export function ContactForm() {
               className="w-full transition-all duration-300 hover:shadow-glow border-border/50"
             >
               <Download className="w-4 h-4 mr-2" />
-              Download do CV
+              {language === 'pt' ? 'Download do CV' : 'Download Resume'}
             </Button>
           </div>
         </form>

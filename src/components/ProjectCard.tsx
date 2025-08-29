@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { ExternalLink, Github, Lock } from "lucide-react"
+import { useTranslation } from "@/contexts/TranslationContext"
 
 interface ProjectCardProps {
   title: string
@@ -23,6 +24,7 @@ export function ProjectCard({
   githubUrl,
   isPrivate = false
 }: ProjectCardProps) {
+  const { t } = useTranslation()
   return (
     <Card className="group overflow-hidden transition-all duration-300 hover:shadow-elegant hover:-translate-y-2 bg-card-gradient border-border/50">
       <CardHeader className="p-0">
@@ -43,7 +45,7 @@ export function ProjectCard({
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>Projeto empresarial privado</p>
+                      <p>{t('projects.private')}</p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
@@ -52,13 +54,13 @@ export function ProjectCard({
                   {liveUrl && (
                     <Button size="sm" className="bg-background/90 text-foreground hover:bg-background">
                       <ExternalLink className="w-4 h-4 mr-1" />
-                      Demo
+                      {t('projects.viewDemo')}
                     </Button>
                   )}
                   {githubUrl && (
                     <Button size="sm" variant="outline" className="bg-background/90 hover:bg-background">
                       <Github className="w-4 h-4 mr-1" />
-                      Código
+                      {t('projects.viewCode')}
                     </Button>
                   )}
                 </>

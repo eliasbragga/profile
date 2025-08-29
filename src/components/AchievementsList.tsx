@@ -1,15 +1,30 @@
 import { CheckCircle2 } from "lucide-react"
+import { useTranslation } from "@/contexts/TranslationContext"
 
-const achievements = [
-  "Melhorei o desempenho do carregamento inicial em 55% na empresa",
-  "Criei guidelines para agilizar o desenvolvimento da equipe",
-  "Mentorei novos desenvolvedores juniores",
-  "Corrigi testes técnicos de desenvolvedores",
-  "Realizei entrevistas técnicas com novos devs da empresa",
-  "Elaborei novos padrões de desenvolvimento e testes"
+const getAchievements = (language: string) => [
+  language === 'pt' 
+    ? "Melhorei o desempenho do carregamento inicial em 55% na empresa"
+    : "Improved initial loading performance by 55% at the company",
+  language === 'pt'
+    ? "Criei guidelines para agilizar o desenvolvimento da equipe"
+    : "Created guidelines to streamline team development",
+  language === 'pt'
+    ? "Mentorei novos desenvolvedores juniores"
+    : "Mentored new junior developers",
+  language === 'pt'
+    ? "Corrigi testes técnicos de desenvolvedores"
+    : "Reviewed technical tests for developers",
+  language === 'pt'
+    ? "Realizei entrevistas técnicas com novos devs da empresa"
+    : "Conducted technical interviews with new company developers",
+  language === 'pt'
+    ? "Elaborei novos padrões de desenvolvimento e testes"
+    : "Developed new development and testing standards"
 ]
 
 export function AchievementsList() {
+  const { language } = useTranslation()
+  const achievements = getAchievements(language)
   return (
     <div className="space-y-4">
       {achievements.map((achievement, index) => (
