@@ -287,7 +287,7 @@ export default function Portfolio() {
             </div>
               <Button 
                 size="lg" 
-                onClick={() => redirectToExternalLink("http://localhost:8082/", "_self")}
+                onClick={() => redirectToExternalLink("https://eliasbraga-journey.netlify.app/", "_self")}
                 className="transition-all mb-3 duration-300 hover:shadow-glow bg-gradient-to-r from-blue-700 to-purple-800 text-white font-bold py-2 px-10 rounded-lg
                transition-all duration-300
                hover:from-blue-600 hover:to-purple-700"
