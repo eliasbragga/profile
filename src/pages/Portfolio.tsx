@@ -57,8 +57,7 @@ const getProjects = (language: string) => [
       : "Private ERP system developed for FERK company. The system managed LPU users, properties, access, and other entities. I participated in the initial planning, designing workflows and technologies, and held meetings with the client to understand business rules and validate deliveries.",
     image: project4,
     technologies: ["Vue.js", "PHP", "Docker", "React", "Scrum", "Azure"],
-    liveUrl: "#",
-    githubUrl: "#",
+    isPrivate: true,
   },
   {
     title: language === 'pt' ? "Mealuga - Corretor Virtual Inteligente" : "Mealuga - Intelligent Virtual Broker",
