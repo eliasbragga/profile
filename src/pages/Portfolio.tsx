@@ -11,7 +11,7 @@ import { EbookCard } from "@/components/EbookCard"
 import { Button } from "@/components/ui/button"
 import { ChevronDown, Github, Linkedin, Mail, BookOpen } from "lucide-react"
 import { useTranslation } from "@/contexts/TranslationContext"
-
+import flagBrasil from "@/assets/folder/br.svg"
 
 // Import images
 import profilePhoto from "@/assets/profile-photo.jpeg"
@@ -117,16 +117,16 @@ const getFeedbacks = (language: string) => [
 ]
 
 const getCountries = (language: string, t: (key: string) => string) => [
-  { name: t('country.brasil'), flag: "🇧🇷" },
-  { name: t('country.portugal'), flag: "🇵🇹" },
-  { name: t('country.espanha'), flag: "🇪🇸" },
-  { name: t('country.franca'), flag: "🇫🇷" },
-  { name: t('country.holanda'), flag: "🇳🇱" },
-  { name: t('country.alemanha'), flag: "🇩🇪" },
-  { name: t('country.republica-tcheca'), flag: "🇨🇿" },
-  { name: t('country.austria'), flag: "🇦🇹" },
-  { name: t('country.italia'), flag: "🇮🇹" },
-  { name: t('country.argentina'), flag: "🇦🇷" },
+  { name: t('country.brasil'), code: 'br' },
+  { name: t('country.portugal'), code: 'pt' },
+  { name: t('country.espanha'), code: 'es' },
+  { name: t('country.franca'), code: 'fr' },
+  { name: t('country.holanda'), code: 'nl' },
+  { name: t('country.alemanha'), code: 'de' },
+  { name: t('country.republica-tcheca'), code: 'cz' },
+  { name: t('country.austria'), code: 'at' },
+  { name: t('country.italia'), code: 'it' },
+  { name: t('country.argentina'), code: 'ar' },
 ]
 
 const getCertificates = (language: string) => [
@@ -257,14 +257,19 @@ export default function Portfolio() {
                 {countries.map((country) => (
                   <div
                     key={country.name}
-                    className="flex items-center gap-1 text-sm bg-background/50 backdrop-blur-sm px-2 py-1 rounded-full border border-border/50 hover:shadow-glow transition-all duration-300"
+                    className="flex items-center gap-2 text-sm bg-background/50 backdrop-blur-sm px-3 py-1 rounded-full border border-border/50 hover:shadow-glow transition-all duration-300"
                     title={country.name}
                   >
-                    <span className="text-lg">{country.flag}</span>
+                    <img
+                      src={`/folder/${country.code}.svg`}
+                      alt={country.name}
+                       className="w-5 h-5 object-contain rounded-sm shadow-sm"
+                    />
                     <span className="text-xs text-muted-foreground hidden sm:inline">{country.name}</span>
                   </div>
                 ))}
               </div>
+
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
