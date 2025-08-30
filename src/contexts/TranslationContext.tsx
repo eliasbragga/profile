@@ -60,7 +60,7 @@ const translations = {
     'contact.description': 'Estou sempre aberto a novos desafios e oportunidades interessantes.',
     
     // Footer
-    'footer.text': '2024 Portfolio. Desenvolvido com ❤️ usando React e Tailwind CSS.',
+    'footer.text': '2025 Portfolio. Desenvolvido com ❤️ usando React e Tailwind CSS.',
     
     // Countries
     'country.brasil': 'Brasil',
@@ -125,7 +125,7 @@ const translations = {
     'contact.description': 'I\'m always open to new challenges and interesting opportunities.',
     
     // Footer
-    'footer.text': '2024 Portfolio. Developed with ❤️ using React and Tailwind CSS.',
+    'footer.text': '2025 Portfolio. Developed with ❤️ using React and Tailwind CSS.',
     
     // Countries
     'country.brasil': 'Brazil',

@@ -234,7 +234,7 @@ export default function Portfolio() {
       <section className="min-h-screen flex items-center justify-center px-4 pt-16 bg-hero-gradient" id="hero">
         <div className="container mx-auto text-center">
           <div className="animate-fade-up">
-            <div className="relative w-40 h-40 mx-auto mb-8 rounded-full overflow-hidden shadow-glow animate-float">
+            <div className="relative w-40 h-40 mx-auto mt-5 mb-8 rounded-full overflow-hidden shadow-glow animate-float">
               <img 
                 src={profilePhoto} 
                 alt="Foto de perfil" 
