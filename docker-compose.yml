@@ -8,3 +8,9 @@ services:
       - VITE_EMAILJS_SERVICE_ID=${VITE_EMAILJS_SERVICE_ID}
       - VITE_EMAILJS_TEMPLATE_ID=${VITE_EMAILJS_TEMPLATE_ID}
       - VITE_EMAILJS_PUBLIC_KEY=${VITE_EMAILJS_PUBLIC_KEY}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minhaapp.rule=Host(`eliasbraga.com`)"
+      - "traefik.http.routers.minhaapp.entrypoints=websecure"
+      - "traefik.http.routers.minhaapp.tls.certresolver=letsencrypt"
+      - "traefik.http.services.minhaapp.loadbalancer.server.port=3010"
