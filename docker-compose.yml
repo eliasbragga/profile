@@ -2,7 +2,7 @@ services:
   portfolio:
     build: .
     ports:
-      - "80:80"
+      - "3010:80"
     environment:
       - VITE_JOURNEY_URL=${VITE_JOURNEY_URL}
       - VITE_EMAILJS_SERVICE_ID=${VITE_EMAILJS_SERVICE_ID}
