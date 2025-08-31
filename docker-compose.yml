@@ -1,0 +1,10 @@
+services:
+  portfolio:
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      - VITE_JOURNEY_URL=${VITE_JOURNEY_URL}
+      - VITE_EMAILJS_SERVICE_ID=${VITE_EMAILJS_SERVICE_ID}
+      - VITE_EMAILJS_TEMPLATE_ID=${VITE_EMAILJS_TEMPLATE_ID}
+      - VITE_EMAILJS_PUBLIC_KEY=${VITE_EMAILJS_PUBLIC_KEY}

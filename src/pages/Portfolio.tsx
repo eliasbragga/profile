@@ -11,7 +11,6 @@ import { EbookCard } from "@/components/EbookCard"
 import { Button } from "@/components/ui/button"
 import { ChevronDown, Github, Linkedin, Mail, BookOpen } from "lucide-react"
 import { useTranslation } from "@/contexts/TranslationContext"
-import flagBrasil from "@/assets/folder/br.svg"
 
 // Import images
 import profilePhoto from "@/assets/profile-photo.jpeg"
@@ -163,6 +162,7 @@ const getCertificates = (language: string) => [
 ]
 
 export default function Portfolio() {
+  const journeyUrl = import.meta.env.VITE_JOURNEY_URL;
   const [scrollY, setScrollY] = useState(0)
   const { language, t } = useTranslation()
   
@@ -291,7 +291,7 @@ export default function Portfolio() {
             </div>
               <Button 
                 size="lg" 
-                onClick={() => redirectToExternalLink("https://eliasbraga-journey.netlify.app/", "_self")}
+                onClick={() => redirectToExternalLink(journeyUrl, "_self")}
                 className="transition-all mb-3 duration-300 hover:shadow-glow bg-gradient-to-r from-blue-700 to-purple-800 text-white font-bold py-2 px-10 rounded-lg
                transition-all duration-300
                hover:from-blue-600 hover:to-purple-700"
